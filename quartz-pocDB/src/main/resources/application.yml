@@ -1,0 +1,31 @@
+spring:
+  application.name: myApp
+  quartz:
+
+    jdbc.initialize-schema: always
+
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO
+          threadPool:
+            threadCount: 5
+          plugin:
+            shutdownhook:
+              class: org.quartz.plugins.management.ShutdownHookPlugin
+              cleanShutdown: TRUE
+
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: qrtz_
+            isClustered: true
+            dataSource: myDataSource
+
+          dataSource:
+            myDataSource:
+              driver: com.mysql.cj.jdbc.Driver
+              URL: jdbc:mysql://localhost:3306/quartz_schema
+              user: root
+              password: root
